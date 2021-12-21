@@ -6,6 +6,12 @@
 //
 
 import UIKit
+import NotificationCenter
+
+
+var model = [Notifications]()
+
+let notificationContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
 class ViewController: UIViewController {
 
@@ -16,17 +22,24 @@ class ViewController: UIViewController {
     @IBOutlet weak var counterLabel: UILabel!
     
     @IBOutlet weak var pauseBtn: UIButton!
+    
+    public var completion : ((String, String, Date) -> Void)?
+    let notificationCenter = UNUserNotificationCenter.current()
     //declare vars
     
     var timer = Timer()
     var seconds: Double = 0.0
     var totalTimeInSeconds = 0.0
     var isPaused: Bool = false
+    var workUntil: String = ""
+    var titleString = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         //barBtnTapped()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(barBtnTapped))
+        
+     
        
     }
 
@@ -39,6 +52,7 @@ class ViewController: UIViewController {
             guard  let field = alert.textFields?.first, let text = field.text, !text.isEmpty else{
                 return
             }
+            self?.titleString = text
             self?.currentTaskLabel.text = text
             self?.totalTimeLabel.text = "Total Time: 00:00:00"
             self?.counterLabel.text = "00:00:00"
@@ -50,13 +64,36 @@ class ViewController: UIViewController {
     }
 
     @IBAction func startBtnPressed(_ sender: UIButton) {
+        
+    
         //print(timerPicker.countDownDuration)
         seconds = timerPicker.countDownDuration
        
         let timeFormated = timeFormatterToString(time: seconds)
         counterLabel.text = timeFormated
         
+        let currentTime = Date(timeIntervalSinceNow: (seconds))
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm a"
+        workUntil = formatter.string(from: currentTime)
+        print(workUntil)
         
+        workUntilLabel.text = "Work Until: \(workUntil)"
+        
+        //notifications
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { permissionsGranted , error in
+            
+            if permissionsGranted {
+                // run notification
+                self.scheduleNotification()
+            } else if let error = error {
+                print("error : \(error.localizedDescription)")
+            }
+        }
+        
+        
+
         
         //in order to prevent two timers from working on the same time
         timer.invalidate()
@@ -70,6 +107,13 @@ class ViewController: UIViewController {
                 pauseBtn.isEnabled = false
             } else{
                 pauseBtn.setTitle("Pause", for: .normal)
+                let currentTime = Date(timeIntervalSinceNow: (seconds))
+                let formatter = DateFormatter()
+                formatter.dateFormat = "HH:mm a"
+                workUntil = formatter.string(from: currentTime)
+                print(workUntil)
+                workUntilLabel.text = "Work Until: \(workUntil)"
+                
                 let timeFormated = timeFormatterToString(time: seconds)
                 counterLabel.text = timeFormated
                 timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDownTimer), userInfo: nil, repeats: true)
@@ -80,6 +124,9 @@ class ViewController: UIViewController {
         timer.invalidate()
         pauseBtn.setTitle("Resume", for: .normal)
         totalTimeLabel.text = "Total Time: \(timeFormatterToString(time: totalTimeInSeconds))"
+            
+      
+            
             isPaused = true
         }
        
@@ -111,6 +158,42 @@ class ViewController: UIViewController {
         return timeCounter
     }
     
+    func scheduleNotification(){
+        //notification content
+        let content = UNMutableNotificationContent()
+        content.title = titleString
+        content.body = "Work Until: \(workUntil)"
+        content.sound = .default
+        
+        
+        // notification trigger
+        let targetDate = Date().addingTimeInterval(10)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.day,.hour,.minute,.second], from: targetDate), repeats: false)
+        
+        //create a request
+        
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request) { error in
+            
+            if error != nil{
+                print("Something went wrong")
+            }
+        }
+        addNofitication(title: titleString, body: "work Until: \(workUntil)", date: targetDate)
+    }
+    
+    func addNofitication(title: String, body: String, date: Date){
+        let newNotif = Notifications(context: notificationContext)
+        newNotif.title = title
+        newNotif.body = body
+        newNotif.time = date
+        do{
+            try notificationContext.save()
+         
+        }catch{
+            //error handling
+        }
+    }
 }
 
 

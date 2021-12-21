@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC3326B72771B7490057202C /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3326B62771B7490057202C /* NotificationsTableViewController.swift */; };
+		CC3326BE2771EC2F0057202C /* Notifications+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3326BC2771EC2F0057202C /* Notifications+CoreDataClass.swift */; };
+		CC3326BF2771EC2F0057202C /* Notifications+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3326BD2771EC2F0057202C /* Notifications+CoreDataProperties.swift */; };
+		CC3326C22771ED590057202C /* NotificationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3326C12771ED590057202C /* NotificationsTableViewCell.swift */; };
 		CC7947F5276A80DA00B5A482 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7947F4276A80DA00B5A482 /* AppDelegate.swift */; };
 		CC7947F7276A80DA00B5A482 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7947F6276A80DA00B5A482 /* SceneDelegate.swift */; };
 		CC7947F9276A80DA00B5A482 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7947F8276A80DA00B5A482 /* ViewController.swift */; };
@@ -37,6 +41,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CC3326B62771B7490057202C /* NotificationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewController.swift; sourceTree = "<group>"; };
+		CC3326BC2771EC2F0057202C /* Notifications+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notifications+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CC3326BD2771EC2F0057202C /* Notifications+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notifications+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CC3326C12771ED590057202C /* NotificationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewCell.swift; sourceTree = "<group>"; };
 		CC7947F1276A80DA00B5A482 /* Timer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC7947F4276A80DA00B5A482 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC7947F6276A80DA00B5A482 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +86,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CC3326C02771ED390057202C /* model */ = {
+			isa = PBXGroup;
+			children = (
+				CC3326BC2771EC2F0057202C /* Notifications+CoreDataClass.swift */,
+				CC3326BD2771EC2F0057202C /* Notifications+CoreDataProperties.swift */,
+				CC3326C12771ED590057202C /* NotificationsTableViewCell.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
 		CC7947E8276A80DA00B5A482 = {
 			isa = PBXGroup;
 			children = (
@@ -101,9 +119,11 @@
 		CC7947F3276A80DA00B5A482 /* Timer */ = {
 			isa = PBXGroup;
 			children = (
+				CC3326C02771ED390057202C /* model */,
 				CC7947F4276A80DA00B5A482 /* AppDelegate.swift */,
 				CC7947F6276A80DA00B5A482 /* SceneDelegate.swift */,
 				CC7947F8276A80DA00B5A482 /* ViewController.swift */,
+				CC3326B62771B7490057202C /* NotificationsTableViewController.swift */,
 				CC7947FA276A80DA00B5A482 /* Main.storyboard */,
 				CC794800276A80DC00B5A482 /* Assets.xcassets */,
 				CC794802276A80DC00B5A482 /* LaunchScreen.storyboard */,
@@ -261,8 +281,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC3326C22771ED590057202C /* NotificationsTableViewCell.swift in Sources */,
 				CC7947F9276A80DA00B5A482 /* ViewController.swift in Sources */,
 				CC7947F5276A80DA00B5A482 /* AppDelegate.swift in Sources */,
+				CC3326BE2771EC2F0057202C /* Notifications+CoreDataClass.swift in Sources */,
+				CC3326BF2771EC2F0057202C /* Notifications+CoreDataProperties.swift in Sources */,
+				CC3326B72771B7490057202C /* NotificationsTableViewController.swift in Sources */,
 				CC7947F7276A80DA00B5A482 /* SceneDelegate.swift in Sources */,
 				CC7947FF276A80DA00B5A482 /* Timer.xcdatamodeld in Sources */,
 			);
